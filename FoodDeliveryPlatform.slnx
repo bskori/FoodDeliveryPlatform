@@ -1,1 +1,6 @@
-<Solution />
+<Solution>
+  <Project Path="FoodDelivery.API/FoodDelivery.API.csproj" />
+  <Project Path="FoodDelivery.Data/FoodDelivery.Data.csproj" />
+  <Project Path="FoodDelivery.Models/FoodDelivery.Models.csproj" />
+  <Project Path="FoodDelivery.MVC/FoodDelivery.MVC.csproj" />
+</Solution>
