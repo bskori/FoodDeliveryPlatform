@@ -1,7 +1,27 @@
+using FoodDelivery.Data;
+using Microsoft.EntityFrameworkCore;
+using FoodDelivery.Data.Repositories.Interfaces;
+using FoodDelivery.Data.Repositories.Implementations;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration
+    .GetConnectionString("FoodDeliveryConnection")
+    ?? throw new InvalidOperationException(
+        "Database connection string is missing");
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+
+builder.Services.AddScoped(
+    typeof(IGenricRepository<>),
+    typeof(GenericRepository<>));
+
+
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
