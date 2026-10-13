@@ -2,6 +2,7 @@ using FoodDelivery.Data;
 using Microsoft.EntityFrameworkCore;
 using FoodDelivery.Data.Repositories.Interfaces;
 using FoodDelivery.Data.Repositories.Implementations;
+using FoodDelivery.API.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
+builder.Services.AddAutoMapper(typeof(ItemMappingProfile));
 
 builder.Services.AddScoped(
     typeof(IGenricRepository<>),

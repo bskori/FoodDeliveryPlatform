@@ -1,6 +1,8 @@
-﻿using FoodDelivery.Data;
+﻿using AutoMapper;
+using FoodDelivery.Data;
 using FoodDelivery.Data.Entities;
 using FoodDelivery.Data.Repositories.Interfaces;
+using FoodDelivery.Models.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +14,11 @@ namespace FoodDelivery.API.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IGenricRepository<Item> _itemRepository;
-        public ItemsController(IGenricRepository<Item> itemRepository)
+        private readonly IMapper _mapper;
+        public ItemsController(IGenricRepository<Item> itemRepository, IMapper mapper)
         {
             _itemRepository = itemRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,7 +27,9 @@ namespace FoodDelivery.API.Controllers
             var items = await _itemRepository
                 .GetAllAsync(cancellationToken);
 
-            return Ok(items);
+            var itemDtos = _mapper.Map<List<ItemDto>>(items);
+
+            return Ok(itemDtos);
         }
 
         [HttpGet("{id:int}")]
@@ -47,7 +53,9 @@ namespace FoodDelivery.API.Controllers
                 });
             }
 
-            return Ok(item);
+            var itemDto = _mapper.Map<ItemDto>(item);
+
+            return Ok(itemDto);
         }
 
 
