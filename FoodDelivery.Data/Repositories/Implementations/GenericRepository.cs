@@ -21,5 +21,13 @@ namespace FoodDelivery.Data.Repositories.Implementations
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
         }
+
+        public async Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<T>()
+                .FindAsync(
+                    new object[] { id },
+                    cancellationToken);
+        }
     }
 }

@@ -25,5 +25,31 @@ namespace FoodDelivery.API.Controllers
 
             return Ok(items);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetItemById(int id, CancellationToken cancellationToken)
+        {
+            if(id <= 0)
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid food item ID."
+                });
+            }
+
+            var item = await _itemRepository.GetByIdAsync(id, cancellationToken);
+
+            if(item == null) 
+            {
+                return NotFound(new
+                {
+                    message = "Food item not found."
+                });
+            }
+
+            return Ok(item);
+        }
+
+
     }
 }

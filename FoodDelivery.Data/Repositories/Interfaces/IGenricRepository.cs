@@ -9,5 +9,7 @@ namespace FoodDelivery.Data.Repositories.Interfaces
     {
         Task<List<T>> GetAllAsync(
             CancellationToken cancellationToken = default);
+
+        Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }
