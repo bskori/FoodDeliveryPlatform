@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using FoodDelivery.Data.Repositories.Interfaces;
 using FoodDelivery.Data.Repositories.Implementations;
 using FoodDelivery.API.Mappings;
+using FoodDelivery.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<CommonResponseMiddleware>();
 
 app.MapControllers();
 
