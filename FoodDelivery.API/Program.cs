@@ -6,6 +6,7 @@ using FoodDelivery.API.Mappings;
 using FoodDelivery.API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using FoodDelivery.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +72,8 @@ builder.Services
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddScoped<JwtTokenService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,16 +84,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseMiddleware<CommonResponseMiddleware>();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
