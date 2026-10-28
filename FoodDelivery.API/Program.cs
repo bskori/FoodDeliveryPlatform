@@ -7,6 +7,8 @@ using FoodDelivery.API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using FoodDelivery.API.Services;
+using Microsoft.AspNetCore.Identity;
+using FoodDelivery.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString);
 });
 
-builder.Services.AddAutoMapper(typeof(ItemMappingProfile));
+builder.Services.AddAutoMapper(
+    configuration =>
+    {
+
+    },
+    typeof(ItemMappingProfile));
 
 builder.Services.AddScoped(
     typeof(IGenricRepository<>),
@@ -73,6 +80,8 @@ builder.Services
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<JwtTokenService>();
+
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 var app = builder.Build();
 
