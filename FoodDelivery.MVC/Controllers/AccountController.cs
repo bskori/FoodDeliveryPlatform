@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace FoodDelivery.MVC.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IHttpClientFactory _httpClientFactory;
@@ -54,7 +54,7 @@ namespace FoodDelivery.MVC.Controllers
                 //Convert the API Json into C# object
                 LoginResponseDto? loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
 
-                if(loginResponse == null || string.IsNullOrWhiteSpace(loginResponse.AccessToken))
+                if(loginResponse == null || string.IsNullOrWhiteSpace(loginResponse.AccessToken) || loginResponse.UserId <= 0 || string.IsNullOrWhiteSpace(loginResponse.Email) || string.IsNullOrWhiteSpace(loginResponse.FullName) || string.IsNullOrWhiteSpace(loginResponse.Role))
                 {
                     ModelState.AddModelError("", "Login response was invalid.");
 
@@ -68,9 +68,28 @@ namespace FoodDelivery.MVC.Controllers
 
                 List<Claim> claims = new List<Claim>();
 
+                //Customer database ID
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, loginResponse.UserId.ToString()));
+
+                //Keep email as display name for our current layout
                 claims.Add(new Claim(
                     ClaimTypes.Name,
-                    loginRequest.Email.Trim()));
+                    loginResponse.Email.Trim()));
+
+                //Customer email
+                claims.Add(new Claim(
+                    ClaimTypes.Email,
+                    loginResponse.Email));
+
+                //Customer role
+                claims.Add(new Claim(
+                    ClaimTypes.Role,
+                    loginResponse.Role));
+
+                //Customer full name
+                claims.Add(new Claim(
+                    "FullName",
+                    loginResponse.FullName));
 
                 ClaimsIdentity identity = new ClaimsIdentity(
                     claims,
@@ -115,6 +134,11 @@ namespace FoodDelivery.MVC.Controllers
             {
                 return View("SessionExpired");
             }
+
+            ViewBag.UserId = CurrentUserId;
+            ViewBag.FullName = CurrentUserFullName;
+            ViewBag.Email = CurrentUserEmail;
+            ViewBag.Role = CurrentUserRole;
 
             return View();
         }

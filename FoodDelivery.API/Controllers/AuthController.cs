@@ -71,7 +71,12 @@ namespace FoodDelivery.API.Controllers
             {
                 Message = "Login succesfull.",
                 AccessToken = token,
-                TokenType = "Bearer"
+                TokenType = "Bearer",
+
+                UserId = user.UserId,
+                FullName = user.FullName,
+                Email = user.Email,
+                Role = user.Role
             });
         }
     }

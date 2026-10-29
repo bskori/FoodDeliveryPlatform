@@ -6,9 +6,32 @@
 
     <h2>Welcome to Food Delivery!</h2>
 
-    <p>Logged in as: <strong>@User.Identity?.Name</strong></p>
+    <h5 class="mt-5">Customer Information</h5>
 
-    <p class="text-success">Your MVC login is successfull</p>
+    <table class="table table-bordered mt-3">
+        <tbody>
+            <tr>
+                <th>User ID</th>
+                <td>@ViewBag.UserId</td>
+            </tr>
+            <tr>
+                <th>Full Name</th>
+                <td>@ViewBag.FullName</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@ViewBag.Email</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>@ViewBag.Role</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="text-success">
+    You are logged in successfully.
+    </p>
 
     <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Browse Food</a>
 
