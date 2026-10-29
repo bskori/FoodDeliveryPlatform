@@ -117,16 +117,6 @@ namespace FoodDelivery.MVC.Controllers
             return View();
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> LogoutExpired()
-        //{
-        //    HttpContext.Session.Clear();
-
-        //    await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-        //    return RedirectToAction("Login");
-        //}
-
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -138,5 +128,7 @@ namespace FoodDelivery.MVC.Controllers
 
             return RedirectToAction("Login");
         }
+
+        
     }
 }

@@ -1,3 +1,4 @@
+using FoodDelivery.MVC.Handlers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,7 @@ string apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? throw new In
 builder.Services.AddHttpClient("FoodDeliveryAPI", client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
-});
+}).AddHttpMessageHandler<JwtTokenHandler>();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -39,6 +40,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddTransient<JwtTokenHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +53,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
+
 
 app.UseHttpsRedirection();
 app.UseRouting();
