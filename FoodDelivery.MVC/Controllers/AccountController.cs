@@ -65,17 +65,19 @@ namespace FoodDelivery.MVC.Controllers
                 HttpContext.Session.SetString("AccessToken", loginResponse.AccessToken);
 
                 //Create an MVC identity
+
                 List<Claim> claims = new List<Claim>();
 
                 claims.Add(new Claim(
                     ClaimTypes.Name,
-                    ClaimTypes.Email.Trim()));
+                    loginRequest.Email.Trim()));
 
                 ClaimsIdentity identity = new ClaimsIdentity(
                     claims,
                     CookieAuthenticationDefaults.AuthenticationScheme);
 
                 ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
 
                 //Create the authentication cookie
                 AuthenticationProperties properties = new AuthenticationProperties();
