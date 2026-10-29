@@ -1,7 +1,7 @@
-﻿using FoodDelivery.API.Models.Requests;
-using FoodDelivery.API.Services;
+﻿using FoodDelivery.API.Services;
 using FoodDelivery.Data;
 using FoodDelivery.Data.Entities;
+using FoodDelivery.Models.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

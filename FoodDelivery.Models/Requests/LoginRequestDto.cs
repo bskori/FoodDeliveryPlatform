@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodDelivery.API.Models.Requests
+namespace FoodDelivery.Models.Requests
 {
     public class LoginRequestDto
     {

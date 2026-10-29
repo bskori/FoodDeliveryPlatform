@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Session Expired";
+}
+
+<div class="container mt-5">
+
+    <h3>Your session has expired.</h3>
+
+    <p>Please sign in again to continue.</p>
+
+    <form asp-controller="Account" asp-action="Logout" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-primary">Return to Login</button>
+
+    </form>
+
+</div>

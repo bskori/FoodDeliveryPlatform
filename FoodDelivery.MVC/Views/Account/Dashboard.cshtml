@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Customer Dashboard";
+}
+
+<div class="container mt-5">
+
+    <h2>Welcome to Food Delivery!</h2>
+
+    <p>Logged in as: <strong>@User.Identity?.Name</strong></p>
+
+    <p class="text-success">Your MVC login is successfull</p>
+
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Browse Food</a>
+
+    <form asp-controller="Account" asp-action="Logout" class="mt-3" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-danger">Logout</button>
+
+    </form>
+
+</div>
